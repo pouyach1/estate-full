@@ -4,3 +4,5 @@ out/
 build/
 .ds_store
 *.log
+.vercel
+.env*.local
