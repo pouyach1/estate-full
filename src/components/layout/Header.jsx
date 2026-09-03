@@ -2,14 +2,18 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { siteConfig } from "@/config/siteConfig";
 import { ChevronIcon, FindWordmark } from "@/components/ui/Icons";
 
 export default function Header() {
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [openMenu, setOpenMenu] = useState(null);
+  const isHome = pathname === "/";
+  const solid = scrolled || open || !isHome;
 
   useEffect(() => {
     let last = window.scrollY;
@@ -30,11 +34,16 @@ export default function Header() {
     };
   }, [open]);
 
+  useEffect(() => {
+    setOpen(false);
+    setOpenMenu(null);
+  }, [pathname]);
+
   return (
     <header
-      className={`sticky top-0 z-50 transition-[background-color,transform,color] duration-300 ${
+      className={`sticky top-0 z-50 transition-[background-color,transform,color,box-shadow] duration-300 ${
         hidden ? "-translate-y-full" : "translate-y-0"
-      } ${scrolled || open ? "bg-white text-ink" : "bg-transparent text-ink"}`}
+      } ${solid ? "bg-white text-ink shadow-[0_1px_0_rgba(21,23,23,0.06)]" : "bg-transparent text-ink"}`}
     >
       <div className="site-container">
         <div className="relative z-50 grid min-h-[8.4rem] items-center grid-cols-[1fr_auto] md:min-h-[7.8rem] md:grid-cols-[25rem_1fr_25rem]">
@@ -83,11 +92,9 @@ export default function Header() {
           <div className="hidden items-center justify-end md:flex">
             <Link
               href={siteConfig.header.signInHref}
-              className="hover-shift text-[2rem] font-medium leading-[1.25]"
+              className="inline-flex items-center rounded-full bg-ink px-[2.4rem] py-[1.2rem] text-[1.6rem] font-medium text-white transition hover:bg-black"
             >
-              <span data-text={siteConfig.header.signInLabel}>
-                {siteConfig.header.signInLabel}
-              </span>
+              {siteConfig.header.signInLabel}
             </Link>
           </div>
 
