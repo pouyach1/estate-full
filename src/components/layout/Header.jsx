@@ -43,7 +43,7 @@ export default function Header() {
     <header
       className={`sticky top-0 z-50 transition-[background-color,transform,color,box-shadow] duration-300 ${
         hidden ? "-translate-y-full" : "translate-y-0"
-      } ${solid ? "bg-white text-ink shadow-[0_1px_0_rgba(21,23,23,0.06)]" : "bg-transparent text-ink"}`}
+      } ${solid ? "bg-white text-ink shadow-[0_1px_0_rgba(21,23,23,0.06)]" : "bg-transparent text-white"}`}
     >
       <div className="site-container">
         <div className="relative z-50 grid min-h-[8.4rem] items-center grid-cols-[1fr_auto] md:min-h-[7.8rem] md:grid-cols-[25rem_1fr_25rem]">
