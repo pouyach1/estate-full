@@ -84,6 +84,7 @@ export function FindWordmark({ className = "w-[9.1rem] h-[2.6rem]" }) {
       className={className}
       overflow="visible"
       aria-label="FIND"
+      dir="ltr"
     >
       <FindLetterPaths />
     </svg>

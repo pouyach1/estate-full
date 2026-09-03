@@ -30,31 +30,30 @@ export default function Card({ property }) {
           </span>
         </div>
         <div className="flex flex-col pt-[1.5rem] md:pt-[2rem]">
-          <p
-            dir="ltr"
-            className="ltr text-[2.4rem] font-semibold leading-[1.3] tracking-[-0.02em]"
-          >
-            {property.price}
+          <p className="text-[2.4rem] font-semibold leading-[1.3] tracking-[-0.02em]">
+            <span dir="ltr">{property.price}</span>
           </p>
           <h3 className="mt-[0.8rem] text-[1.8rem] md:text-[2rem] font-medium leading-[1.3]">
             {property.title}
           </h3>
-          <p
-            dir="ltr"
-            className="ltr mt-[0.5rem] text-[1.2rem] md:text-[1.6rem] font-medium leading-[1.3] text-ink/70"
-          >
-            {property.address}
+          <p className="mt-[0.5rem] text-[1.2rem] md:text-[1.6rem] font-medium leading-[1.3] text-ink/70">
+            <span dir="ltr">{property.address}</span>
           </p>
-          <div className="mt-[1.5rem] flex flex-wrap text-[1.2rem] md:text-[1.6rem] font-medium leading-[1.3] text-ink">
-            <span>
-              {property.beds} {bedsLabel}
-            </span>
-            <span className="relative ms-[2.4rem] before:absolute before:top-1/2 before:end-full before:me-[1rem] before:h-[0.4rem] before:w-[0.4rem] before:-translate-y-1/2 before:rounded-full before:bg-ink-muted">
-              {property.baths} {bathsLabel}
-            </span>
-            <span className="relative ms-[2.4rem] before:absolute before:top-1/2 before:end-full before:me-[1rem] before:h-[0.4rem] before:w-[0.4rem] before:-translate-y-1/2 before:rounded-full before:bg-ink-muted">
-              {property.area} {areaLabel}
-            </span>
+          <div className="mt-[1.5rem]">
+            <div
+              dir="ltr"
+              className="ltr inline-flex flex-wrap text-[1.2rem] md:text-[1.6rem] font-medium leading-[1.3] text-ink"
+            >
+              <span>
+                {property.beds} {bedsLabel}
+              </span>
+              <span className="relative ms-[2.4rem] before:absolute before:top-1/2 before:end-full before:me-[1rem] before:h-[0.4rem] before:w-[0.4rem] before:-translate-y-1/2 before:rounded-full before:bg-ink-muted">
+                {property.baths} {bathsLabel}
+              </span>
+              <span className="relative ms-[2.4rem] before:absolute before:top-1/2 before:end-full before:me-[1rem] before:h-[0.4rem] before:w-[0.4rem] before:-translate-y-1/2 before:rounded-full before:bg-ink-muted">
+                {property.area} {areaLabel}
+              </span>
+            </div>
           </div>
         </div>
       </Link>
