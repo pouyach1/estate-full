@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { siteConfig } from "@/config/siteConfig";
 import { ArrowIcon, FindLockup } from "@/components/ui/Icons";
+import Copy from "@/components/ui/Copy";
 import Input from "@/components/ui/Input";
 
 export default function Footer() {
@@ -18,7 +19,7 @@ export default function Footer() {
               onSubmit={(event) => event.preventDefault()}
             >
               <p className="text-[1.6rem] font-medium leading-[1.5] md:text-[3.2rem] md:leading-[1.1] md:tracking-[-0.01em]">
-                {footer.newsletterTitle}
+                <Copy>{footer.newsletterTitle}</Copy>
               </p>
               <div className="relative mt-[2.5rem] md:mt-[4rem]">
                 <Input
@@ -43,7 +44,10 @@ export default function Footer() {
                 <p className="mb-[2.5rem] hidden text-[1.6rem] font-medium leading-[1.5] text-white/40 md:block">
                   {contact.officeLabel}
                 </p>
-                <p className="text-[1.6rem] font-medium leading-[1.5] md:text-[2rem]">
+                <p
+                  dir="ltr"
+                  className="ltr text-[1.6rem] font-medium leading-[1.5] md:text-[2rem]"
+                >
                   {contact.addressLine1}
                   <br />
                   {contact.addressLine2}
@@ -55,7 +59,8 @@ export default function Footer() {
                 </p>
                 <a
                   href={contact.emailHref}
-                  className="text-[1.6rem] font-medium leading-[1.5] underline md:text-[2rem] md:no-underline max-md:text-[2.2rem] max-md:leading-none"
+                  dir="ltr"
+                  className="ltr text-[1.6rem] font-medium leading-[1.5] underline md:text-[2rem] md:no-underline max-md:text-[2.2rem] max-md:leading-none"
                 >
                   {contact.email}
                 </a>
@@ -66,7 +71,8 @@ export default function Footer() {
                 </p>
                 <a
                   href={contact.phoneHref}
-                  className="text-[1.6rem] font-medium leading-[1.5] md:text-[2rem]"
+                  dir="ltr"
+                  className="ltr text-[1.6rem] font-medium leading-[1.5] md:text-[2rem]"
                 >
                   {contact.phone}
                 </a>
@@ -101,7 +107,7 @@ export default function Footer() {
             </nav>
           </div>
 
-          <div className="col-span-full mt-[8rem] md:mt-[12.5rem]">
+          <div className="col-span-full mt-[8rem] md:mt-[12.5rem]" dir="ltr">
             <FindLockup className="h-auto w-full max-w-full overflow-visible text-white md:h-[28rem] md:w-[97.5rem]" />
           </div>
 

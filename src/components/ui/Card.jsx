@@ -30,13 +30,19 @@ export default function Card({ property }) {
           </span>
         </div>
         <div className="flex flex-col pt-[1.5rem] md:pt-[2rem]">
-          <p className="text-[2.4rem] font-semibold leading-[1.3] tracking-[-0.02em]">
+          <p
+            dir="ltr"
+            className="ltr text-[2.4rem] font-semibold leading-[1.3] tracking-[-0.02em]"
+          >
             {property.price}
           </p>
           <h3 className="mt-[0.8rem] text-[1.8rem] md:text-[2rem] font-medium leading-[1.3]">
             {property.title}
           </h3>
-          <p className="mt-[0.5rem] text-[1.2rem] md:text-[1.6rem] font-medium leading-[1.3] text-ink/70">
+          <p
+            dir="ltr"
+            className="ltr mt-[0.5rem] text-[1.2rem] md:text-[1.6rem] font-medium leading-[1.3] text-ink/70"
+          >
             {property.address}
           </p>
           <div className="mt-[1.5rem] flex flex-wrap text-[1.2rem] md:text-[1.6rem] font-medium leading-[1.3] text-ink">

@@ -38,7 +38,12 @@ export default function Header() {
     >
       <div className="site-container">
         <div className="relative z-50 grid min-h-[8.4rem] items-center grid-cols-[1fr_auto] md:min-h-[7.8rem] md:grid-cols-[25rem_1fr_25rem]">
-          <Link href="/" className="flex items-center" aria-label={siteConfig.brand.name}>
+          <Link
+            href="/"
+            className="flex items-center"
+            aria-label={siteConfig.brand.name}
+            dir="ltr"
+          >
             <FindWordmark className="h-[2.6rem] w-[9.1rem]" />
           </Link>
 

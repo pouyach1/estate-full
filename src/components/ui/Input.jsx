@@ -30,6 +30,7 @@ export default function Input({
           name={name}
           required={required}
           placeholder={placeholder}
+          dir={type === "email" || type === "tel" || type === "url" ? "ltr" : undefined}
           className={`w-full bg-transparent text-[1.6rem] md:text-[1.8rem] font-medium leading-[1.5] outline-none placeholder:text-current ${
             dark ? "text-white placeholder:text-white/40" : "text-ink"
           }`}

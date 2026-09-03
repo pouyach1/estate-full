@@ -5,7 +5,7 @@ import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { siteConfig } from "@/config/siteConfig";
 import Button from "@/components/ui/Button";
-import { FindLockup } from "@/components/ui/Icons";
+import { FindHeroLockup } from "@/components/ui/Icons";
 
 export default function HeroSection() {
   const { hero } = siteConfig;
@@ -106,9 +106,10 @@ export default function HeroSection() {
 
           <motion.div
             style={{ opacity: logoOpacity }}
-            className="absolute start-1/2 top-1/2 z-[1] h-[10.2rem] w-[23.5rem] -translate-x-1/2 -translate-y-1/2 text-white md:h-[42.3rem] md:w-[97.7rem]"
+            className="absolute left-1/2 top-1/2 z-[1] h-[10.2rem] w-[23.5rem] -translate-x-1/2 -translate-y-1/2 text-white md:h-[42.3rem] md:w-[97.7rem]"
+            dir="ltr"
           >
-            <FindLockup className="h-full w-full" />
+            <FindHeroLockup className="h-full w-full" />
           </motion.div>
 
           <motion.div
