@@ -1,5 +1,0 @@
-# HTTrack Website Copier Cookie File
-# This file format is compatible with Netscape cookies
-fresh-boot-3c0a0dc212.media.strapiapp.com	TRUE	/	FALSE	1999999999	__cf_bm	ieXPwfYlLuEDWSg8rATuVXuAIA_So.rlrwmjA0UAbdQ-1788414770.6593742-1.0.1.1-FhJ7IaixjZlCtByLNv2DzLY2Ux_ZPHS3PlyCFAWMj3qzmpEau_nVX5pS2Aa2h0qvRQkLvYVrYv.bHYtXi4PNQHXOuCGG5zomv1buYNyjem5cELhLAeNZzy7xWneiWuWu
-fresh-boot-3c0a0dc212.media.strapiapp.com	TRUE	/	FALSE	1999999999	SameSite	None
-
