@@ -29,10 +29,11 @@ export default function SmoothScroll() {
     }
 
     const lenis = new Lenis({
-      // FIND uses a calm, cinematic wheel feel
+      // FIND uses a calm, cinematic wheel / touch feel
       duration: 1.2,
       smoothWheel: true,
-      touchMultiplier: 1.5,
+      touchMultiplier: 1.35,
+      syncTouch: false,
     });
 
     // Keep Lenis in sync with the forced top-of-page start (no lerp on boot)

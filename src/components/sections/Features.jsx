@@ -58,10 +58,10 @@ export default function Features() {
                   {item.description}
                 </p>
                 <div className="relative flex items-end justify-between self-end whitespace-nowrap text-[10.45rem] leading-[0.95] tracking-[-0.04em] md:items-start md:self-start md:text-[24rem] md:tracking-[-0.05em]">
-                  <span className="relative inline-block after:absolute after:inset-x-[0.085em] after:bottom-0 after:origin-right after:border-t-[0.0333em] after:scale-x-0 after:transition-transform after:duration-1000 after:ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:after:scale-x-100 rtl:after:origin-left">
+                  <span className="relative inline-block after:absolute after:inset-x-[0.085em] after:bottom-0 after:origin-right after:border-t-[0.0333em] after:scale-x-100 after:transition-transform after:duration-1000 after:ease-[cubic-bezier(0.16,1,0.3,1)] md:after:scale-x-0 md:group-hover:after:scale-x-100 rtl:after:origin-left">
                     {item.title}
                   </span>
-                  <ArrowIcon className="relative top-[0.05em] h-[1em] w-[1em] opacity-0 -translate-x-[10%] transition duration-700 group-hover:translate-x-0 group-hover:opacity-100 rtl:rotate-180 rtl:translate-x-[10%] rtl:group-hover:translate-x-0" />
+                  <ArrowIcon className="relative top-[0.05em] h-[1em] w-[1em] opacity-100 -translate-x-0 transition duration-700 md:opacity-0 md:-translate-x-[10%] md:group-hover:translate-x-0 md:group-hover:opacity-100 rtl:rotate-180 md:rtl:translate-x-[10%] rtl:group-hover:translate-x-0" />
                 </div>
               </div>
             </Link>

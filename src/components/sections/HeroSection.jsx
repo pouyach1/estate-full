@@ -14,32 +14,41 @@ import Button from "@/components/ui/Button";
 import { EASE_LUXURY, MOTION } from "@/lib/motion";
 
 /**
- * FIND hero motion reconstruction (Framer Motion + Lenis):
- * - Tall scroll stage (350vh mobile / 500vh desktop), sticky 100vh viewport
- * - Layers: sky → house → clouds → smoke → content → white veil
- * - Load: sky 1.1→1 (5s expo), clouds rise, house fade/rise, copy stagger
- * - Scroll scrub: house up+scale, clouds ±X, smoke reveal, copy fade/scale
- * - Phase 16: NO English FIND lockup / letter mask during transition
+ * FIND hero motion (Framer Motion + Lenis)
+ *
+ * Desktop + mobile share the same scrub timeline; composition differs by breakpoint
+ * (measured from findrealestate.com CSS modules):
+ *
+ * Mobile (≤767):
+ * - stage 350vh, house h 33.4rem @ top 60vh
+ * - clouds: first top 33.7rem / left -57.2rem / 70.2×29.8rem
+ *           last  top 37.12rem / right -41.2rem / 55.7×23.6rem
+ * - smoke h 45rem from translateY(70%)
+ * - content: centered grid, padding-bottom 15rem
+ * - bottom wash 10rem
+ *
+ * Desktop (≥768): stage 500vh, taller house/clouds/smoke, pb 22.8rem
+ * Phase 16: no English FIND lockup / letter mask
  */
 
-const CLOUD_BASE = {
-  1: {
-    left: "0%",
-    right: undefined,
-    bottom: "20%",
-    width: "70%",
-    height: "55%",
+const CLOUDS = [
+  {
+    id: 1,
+    /* first-child — drifts left on scroll */
+    className:
+      "top-[33.7rem] left-[-57.2rem] h-[29.8rem] w-[70.2rem] md:top-[25%] md:left-[-33.72rem] md:h-[47.7rem] md:w-[112.4rem]",
     flipped: false,
+    xTo: "-15%",
   },
-  2: {
-    left: "auto",
-    right: "0%",
-    bottom: "12%",
-    width: "80%",
-    height: "60%",
+  {
+    id: 2,
+    /* last-child — drifts right on scroll */
+    className:
+      "top-[37.12rem] right-[-41.2rem] h-[23.6rem] w-[55.7rem] md:top-[20%] md:right-[-33.72rem] md:h-[39.7rem] md:w-[93.6rem]",
     flipped: true,
+    xTo: "15%",
   },
-};
+];
 
 export default function HeroSection() {
   const { hero, brand } = siteConfig;
@@ -53,11 +62,11 @@ export default function HeroSection() {
     offset: ["start start", "end start"],
   });
 
-  /* Layer timing maps (normalized 0→1) — from FIND ScrollTrigger scrub */
+  /* Layer timing maps — FIND ScrollTrigger scrub (shared mobile/desktop) */
   const houseY = useTransform(progress, [0, 1], ["0%", "-40%"]);
   const houseScale = useTransform(progress, [0, 1], [1, 1.3]);
-  const cloud1X = useTransform(progress, [0, 1], ["0%", "15%"]);
-  const cloud2X = useTransform(progress, [0, 1], ["0%", "-15%"]);
+  const cloud1X = useTransform(progress, [0, 1], ["0%", CLOUDS[0].xTo]);
+  const cloud2X = useTransform(progress, [0, 1], ["0%", CLOUDS[1].xTo]);
   const smokeY = useTransform(progress, [0, 1], ["70%", "0%"]);
   const contentY = useTransform(progress, [0, 1], ["0%", "20%"]);
   const contentScale = useTransform(progress, [0, 1], [1, 0.9]);
@@ -66,11 +75,10 @@ export default function HeroSection() {
   const contentFadeRef = useRef(null);
   const veilFadeRef = useRef(null);
 
-  /* Opacity MotionValues do not paint reliably here; drive fades from progress. */
   useMotionValueEvent(progress, "change", (v) => {
     if (reduce) return;
     if (contentFadeRef.current) {
-      const o = v <= 0 ? 1 : v >= 0.3 ? 0 : 1 - v / 0.3;
+      const o = v <= 0 ? 1 : v >= 0.28 ? 0 : 1 - v / 0.28;
       contentFadeRef.current.style.opacity = String(o);
     }
     if (veilFadeRef.current) {
@@ -79,12 +87,11 @@ export default function HeroSection() {
     }
   });
 
-  /* Seed fades once refs exist (refresh / first paint may skip a "change" at 0). */
   useEffect(() => {
     if (reduce) return undefined;
     const v = progress.get();
     if (contentFadeRef.current) {
-      const o = v <= 0 ? 1 : v >= 0.3 ? 0 : 1 - v / 0.3;
+      const o = v <= 0 ? 1 : v >= 0.28 ? 0 : 1 - v / 0.28;
       contentFadeRef.current.style.opacity = String(o);
     }
     if (veilFadeRef.current) {
@@ -120,6 +127,8 @@ export default function HeroSection() {
     return () => window.clearTimeout(id);
   }, [reduce]);
 
+  const cloudX = [cloud1X, cloud2X];
+
   return (
     <>
       <section
@@ -148,9 +157,9 @@ export default function HeroSection() {
               />
             </motion.div>
 
-            {/* 2 — House (from below fold; scroll raises + scales) */}
+            {/* 2 — House (mobile: 33.4rem band; desktop: tall band) */}
             <motion.div
-              className="absolute inset-x-0 bottom-0 top-[60vh] z-[1] origin-bottom"
+              className="absolute inset-x-0 top-[60vh] z-[1] h-[33.4rem] origin-bottom md:h-[170.8rem]"
               initial={reduce ? false : { opacity: 0, y: 48 }}
               animate={ready ? { opacity: 1, y: 0 } : { opacity: 0, y: 48 }}
               transition={
@@ -174,21 +183,12 @@ export default function HeroSection() {
               </motion.div>
             </motion.div>
 
-            {/* 3–4 — Cloud layers (independent X parallax) */}
-            {[1, 2].map((id) => {
-              const cfg = CLOUD_BASE[id];
-              const xMotion = id === 1 ? cloud1X : cloud2X;
-              return (
+            {/* 3–4 — Cloud layers (independent X parallax, reference rem geometry) */}
+            <div className="pointer-events-none absolute inset-0 z-[2]">
+              {CLOUDS.map((cfg, index) => (
                 <motion.div
-                  key={id}
-                  className="pointer-events-none absolute z-[2]"
-                  style={{
-                    left: cfg.left,
-                    right: cfg.right,
-                    bottom: cfg.bottom,
-                    width: cfg.width,
-                    height: cfg.height,
-                  }}
+                  key={cfg.id}
+                  className={`absolute ${cfg.className}`}
                   initial={reduce ? false : { y: "28%", opacity: 0.85 }}
                   animate={
                     ready
@@ -200,7 +200,7 @@ export default function HeroSection() {
                       ? { duration: 0 }
                       : {
                           duration: 1.6,
-                          delay: 0.25 + id * 0.12,
+                          delay: 0.25 + cfg.id * 0.12,
                           ease: EASE_LUXURY,
                         }
                   }
@@ -209,23 +209,23 @@ export default function HeroSection() {
                     className={`relative h-full w-full will-change-transform ${
                       cfg.flipped ? "scale-x-[-1]" : ""
                     }`}
-                    style={reduce ? undefined : { x: xMotion }}
+                    style={reduce ? undefined : { x: cloudX[index] }}
                   >
                     <Image
                       src={hero.images.cloud}
                       alt=""
                       fill
-                      sizes="(max-width: 768px) 90vw, 70vw"
-                      className="object-contain object-bottom"
+                      sizes="(max-width: 768px) 180vw, 120vw"
+                      className="object-cover object-bottom"
                     />
                   </motion.div>
                 </motion.div>
-              );
-            })}
+              ))}
+            </div>
 
-            {/* 5 — Smoke / mist (starts below, rises into frame) */}
+            {/* 5 — Smoke / mist */}
             <motion.div
-              className="pointer-events-none absolute inset-x-0 bottom-0 z-[3] h-[min(70vh,72rem)] will-change-transform"
+              className="pointer-events-none absolute inset-x-0 bottom-0 z-[3] h-[45rem] will-change-transform md:h-[62rem]"
               style={reduce ? undefined : { y: smokeY }}
               initial={reduce ? false : { opacity: 0 }}
               animate={ready ? { opacity: 1 } : { opacity: 0 }}
@@ -246,7 +246,13 @@ export default function HeroSection() {
               </div>
             </motion.div>
 
-            {/* Soft white veil — transition beat without English lockup */}
+            {/* Static bottom wash (FIND hero_overlay) */}
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-x-0 bottom-0 z-[3] h-[10rem] bg-gradient-to-b from-transparent to-white md:h-[30.9rem]"
+            />
+
+            {/* Soft white veil — scroll handoff without English lockup */}
             {!reduce && (
               <motion.div
                 aria-hidden
@@ -261,14 +267,14 @@ export default function HeroSection() {
               </motion.div>
             )}
 
-            {/* 6 — Typography / CTA (fades as house/clouds take over) */}
+            {/* 6 — Typography / CTA — mobile: centered stage like FIND */}
             <motion.div
-              className="absolute inset-0 z-[5] flex items-end pb-[min(18vh,12rem)] pt-[8.4rem] will-change-transform md:items-center md:pb-0 md:pt-[7.8rem]"
+              className="absolute inset-0 z-[5] grid h-full items-center pb-[15rem] pt-[8.4rem] will-change-transform md:pb-[22.8rem] md:pt-[7.8rem]"
               style={reduce ? undefined : { y: contentY, scale: contentScale }}
             >
               <div
                 ref={contentFadeRef}
-                className="site-container w-full text-center md:text-start"
+                className="site-container w-full text-center"
                 style={{ opacity: 1 }}
               >
                 <motion.h1
@@ -281,7 +287,7 @@ export default function HeroSection() {
                 </motion.h1>
 
                 <motion.p
-                  className="lead-lg mx-auto mt-[1.5rem] max-w-[90rem] text-balance text-white md:mx-0 md:mt-[2rem] [text-shadow:0_1px_2px_rgba(21,23,23,0.35),0_6px_24px_rgba(21,23,23,0.22)]"
+                  className="lead-lg mx-auto mt-[1.5rem] max-w-[90rem] text-balance text-white md:mt-[2rem] [text-shadow:0_1px_2px_rgba(21,23,23,0.35),0_6px_24px_rgba(21,23,23,0.22)]"
                   initial={reduce ? false : { opacity: 0, y: 18 }}
                   animate={ready ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }}
                   transition={MOTION.heroLead}
@@ -291,7 +297,7 @@ export default function HeroSection() {
                 </motion.p>
 
                 <motion.div
-                  className="mt-[3rem] flex justify-center md:mt-[4rem] md:justify-start"
+                  className="mt-[3rem] flex justify-center md:mt-[4rem]"
                   initial={reduce ? false : { opacity: 0, y: 16 }}
                   animate={ready ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
                   transition={MOTION.heroCta}
@@ -308,7 +314,7 @@ export default function HeroSection() {
         </div>
       </section>
 
-      {/* Overlap mist into white section (FIND #overlap pattern) */}
+      {/* Overlap mist into white section */}
       <section
         ref={overlapRef}
         aria-hidden
@@ -317,7 +323,7 @@ export default function HeroSection() {
         <div className="sticky top-0 h-svh overflow-hidden">
           <motion.div
             ref={overlapFadeRef}
-            className="absolute inset-x-0 bottom-0 h-[min(85vh,90rem)] will-change-transform"
+            className="absolute inset-x-0 bottom-0 h-[45rem] will-change-transform md:h-[min(85vh,90rem)]"
             style={
               reduce
                 ? { opacity: 0.35 }
