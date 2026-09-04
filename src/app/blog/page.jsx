@@ -2,7 +2,7 @@ import { siteConfig } from "@/config/siteConfig";
 import JournalSection from "@/components/sections/JournalSection";
 
 export const metadata = {
-  title: `Blog | ${siteConfig.brand.legalName}`,
+  title: `${siteConfig.pageTitles.blog} | ${siteConfig.brand.legalName}`,
   description: siteConfig.journal.body,
 };
 

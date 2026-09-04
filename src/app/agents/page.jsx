@@ -4,7 +4,7 @@ import PageIntro from "@/components/sections/PageIntro";
 import Button from "@/components/ui/Button";
 
 export const metadata = {
-  title: `Agents | ${siteConfig.brand.legalName}`,
+  title: `${siteConfig.pageTitles.agents} | ${siteConfig.brand.legalName}`,
   description: siteConfig.agents.directoryBody,
 };
 
@@ -46,6 +46,7 @@ export default function AgentsPage() {
               <a
                 href={`mailto:${person.email}`}
                 className="mt-[2rem] text-[1.6rem] font-medium underline md:text-[1.8rem]"
+                dir="ltr"
               >
                 {person.email}
               </a>

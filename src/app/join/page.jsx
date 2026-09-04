@@ -4,7 +4,7 @@ import ContactForm from "@/components/forms/ContactForm";
 import ForAgentsSection from "@/components/sections/ForAgentsSection";
 
 export const metadata = {
-  title: `Join | ${siteConfig.brand.legalName}`,
+  title: `${siteConfig.pageTitles.join} | ${siteConfig.brand.legalName}`,
   description: siteConfig.joinPage.body,
 };
 

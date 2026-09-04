@@ -5,7 +5,7 @@ import ForAgentsSection from "@/components/sections/ForAgentsSection";
 import { photos } from "@/config/photos";
 
 export const metadata = {
-  title: `About | ${siteConfig.brand.legalName}`,
+  title: `${siteConfig.pageTitles.about} | ${siteConfig.brand.legalName}`,
   description: siteConfig.aboutPage.body,
 };
 

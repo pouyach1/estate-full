@@ -44,10 +44,7 @@ export default function Footer() {
                 <p className="mb-[2.5rem] hidden text-[1.6rem] font-medium leading-[1.5] text-white/40 md:block">
                   {contact.officeLabel}
                 </p>
-                <p
-                  dir="ltr"
-                  className="ltr text-[1.6rem] font-medium leading-[1.5] md:text-[2rem]"
-                >
+                <p className="text-[1.6rem] font-medium leading-[1.5] md:text-[2rem]">
                   {contact.addressLine1}
                   <br />
                   {contact.addressLine2}

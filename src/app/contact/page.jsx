@@ -3,7 +3,7 @@ import PageIntro from "@/components/sections/PageIntro";
 import ContactForm from "@/components/forms/ContactForm";
 
 export const metadata = {
-  title: `Contact | ${siteConfig.brand.legalName}`,
+  title: `${siteConfig.pageTitles.contact} | ${siteConfig.brand.legalName}`,
   description: siteConfig.contactPage.body,
 };
 
@@ -22,7 +22,7 @@ export default function ContactPage() {
           <div className="flex flex-col gap-[3rem] text-[1.8rem] font-medium md:text-[2rem]">
             <div>
               <p className="mb-[1rem] text-ink/40">{contact.officeLabel}</p>
-              <p dir="ltr">
+              <p>
                 {contact.addressLine1}
                 <br />
                 {contact.addressLine2}
@@ -36,7 +36,7 @@ export default function ContactPage() {
             </div>
             <div>
               <p className="mb-[1rem] text-ink/40">{contact.phoneLabel}</p>
-              <a href={contact.phoneHref} dir="ltr">
+              <a href={contact.phoneHref} dir="ltr" className="ltr">
                 {contact.phone}
               </a>
             </div>
