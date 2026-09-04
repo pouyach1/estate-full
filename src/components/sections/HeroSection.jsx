@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import {
   motion,
+  useMotionValueEvent,
   useReducedMotion,
   useScroll,
   useTransform,
@@ -60,18 +61,35 @@ export default function HeroSection() {
   const smokeY = useTransform(progress, [0, 1], ["70%", "0%"]);
   const contentY = useTransform(progress, [0, 1], ["0%", "20%"]);
   const contentScale = useTransform(progress, [0, 1], [1, 0.9]);
-  /* Copy exits early so house/clouds own mid-scroll (FIND content fade) */
-  const contentOpacity = useTransform(progress, [0, 0.12, 0.3], [1, 1, 0]);
-  /* Soft white veil replaces English FIND mid-scroll beat */
-  const veilOpacity = useTransform(progress, [0.12, 0.35, 0.65], [0, 0.62, 0.95]);
-  const veilY = useTransform(progress, [0.12, 0.8], ["18%", "0%"]);
+  const veilY = useTransform(progress, [0.1, 0.8], ["18%", "0%"]);
+
+  const contentFadeRef = useRef(null);
+  const veilFadeRef = useRef(null);
+
+  /* Opacity MotionValues do not paint reliably here; drive fades from progress. */
+  useMotionValueEvent(progress, "change", (v) => {
+    if (reduce) return;
+    if (contentFadeRef.current) {
+      const o = v <= 0 ? 1 : v >= 0.3 ? 0 : 1 - v / 0.3;
+      contentFadeRef.current.style.opacity = String(o);
+    }
+    if (veilFadeRef.current) {
+      const o = v <= 0.1 ? 0 : v >= 0.55 ? 1 : (v - 0.1) / 0.45;
+      veilFadeRef.current.style.opacity = String(o);
+    }
+  });
 
   const { scrollYProgress: overlapProgress } = useScroll({
     target: overlapRef,
     offset: ["start end", "end start"],
   });
   const overlapSmokeY = useTransform(overlapProgress, [0, 1], ["0%", "-18%"]);
-  const overlapFade = useTransform(overlapProgress, [0.15, 0.85], [1, 0.15]);
+  const overlapFadeRef = useRef(null);
+  useMotionValueEvent(overlapProgress, "change", (v) => {
+    if (reduce || !overlapFadeRef.current) return;
+    const o = v <= 0.15 ? 1 : v >= 0.85 ? 0.15 : 1 - ((v - 0.15) / 0.7) * 0.85;
+    overlapFadeRef.current.style.opacity = String(o);
+  });
 
   useEffect(() => {
     const id = window.setTimeout(() => setReady(true), reduce ? 0 : 200);
@@ -139,14 +157,13 @@ export default function HeroSection() {
               return (
                 <motion.div
                   key={id}
-                  className="pointer-events-none absolute z-[2] will-change-transform"
+                  className="pointer-events-none absolute z-[2]"
                   style={{
                     left: cfg.left,
                     right: cfg.right,
                     bottom: cfg.bottom,
                     width: cfg.width,
                     height: cfg.height,
-                    ...(reduce ? {} : { x: xMotion }),
                   }}
                   initial={reduce ? false : { y: "28%", opacity: 0.85 }}
                   animate={
@@ -164,10 +181,11 @@ export default function HeroSection() {
                         }
                   }
                 >
-                  <div
-                    className={`relative h-full w-full ${
+                  <motion.div
+                    className={`relative h-full w-full will-change-transform ${
                       cfg.flipped ? "scale-x-[-1]" : ""
                     }`}
+                    style={reduce ? undefined : { x: xMotion }}
                   >
                     <Image
                       src={hero.images.cloud}
@@ -176,7 +194,7 @@ export default function HeroSection() {
                       sizes="(max-width: 768px) 90vw, 70vw"
                       className="object-contain object-bottom"
                     />
-                  </div>
+                  </motion.div>
                 </motion.div>
               );
             })}
@@ -208,25 +226,27 @@ export default function HeroSection() {
             {!reduce && (
               <motion.div
                 aria-hidden
-                className="pointer-events-none absolute inset-x-0 bottom-0 z-[4] h-[55%] bg-gradient-to-t from-white via-white/80 to-transparent"
-                style={{ opacity: veilOpacity, y: veilY }}
-              />
+                className="pointer-events-none absolute inset-x-0 bottom-0 z-[4] h-[55%] will-change-transform"
+                style={{ y: veilY }}
+              >
+                <div
+                  ref={veilFadeRef}
+                  className="h-full w-full bg-gradient-to-t from-white via-white/85 to-transparent"
+                  style={{ opacity: 0 }}
+                />
+              </motion.div>
             )}
 
             {/* 6 — Typography / CTA (fades as house/clouds take over) */}
             <motion.div
               className="absolute inset-0 z-[5] flex items-end pb-[min(18vh,12rem)] pt-[8.4rem] will-change-transform md:items-center md:pb-0 md:pt-[7.8rem]"
-              style={
-                reduce
-                  ? undefined
-                  : {
-                      y: contentY,
-                      scale: contentScale,
-                      opacity: contentOpacity,
-                    }
-              }
+              style={reduce ? undefined : { y: contentY, scale: contentScale }}
             >
-              <div className="site-container w-full text-center md:text-start">
+              <div
+                ref={contentFadeRef}
+                className="site-container w-full text-center md:text-start"
+                style={{ opacity: 1 }}
+              >
                 <motion.h1
                   className="display-xl text-white"
                   initial={reduce ? false : { opacity: 0, y: 24 }}
@@ -272,11 +292,12 @@ export default function HeroSection() {
       >
         <div className="sticky top-0 h-svh overflow-hidden">
           <motion.div
+            ref={overlapFadeRef}
             className="absolute inset-x-0 bottom-0 h-[min(85vh,90rem)] will-change-transform"
             style={
               reduce
                 ? { opacity: 0.35 }
-                : { y: overlapSmokeY, opacity: overlapFade }
+                : { y: overlapSmokeY, opacity: 1 }
             }
           >
             <div className="relative h-full w-full">
