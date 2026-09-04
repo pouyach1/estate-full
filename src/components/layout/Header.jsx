@@ -48,8 +48,9 @@ export default function Header() {
         hidden ? "-translate-y-full" : ""
       } ${solid ? "bg-white text-ink shadow-[0_1px_0_rgba(21,23,23,0.06)]" : "bg-transparent text-white"}`}
     >
-      <div className="site-container">
-        <div className="relative z-50 grid min-h-[8.4rem] items-center grid-cols-[1fr_auto] md:min-h-[7.8rem] md:grid-cols-[25rem_1fr_25rem]">
+      {/* Keep chrome above the full-screen menu so logo + close stay clickable */}
+      <div className="site-container relative z-[70]">
+        <div className="relative grid min-h-[8.4rem] items-center grid-cols-[1fr_auto] md:min-h-[7.8rem] md:grid-cols-[25rem_1fr_25rem]">
           <Link href="/" className="flex items-center" aria-label={siteConfig.brand.name}>
             <FindWordmark className="h-[2.6rem] w-[9.1rem]" />
           </Link>
