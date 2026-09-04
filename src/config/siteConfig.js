@@ -88,7 +88,7 @@ export const siteConfig = {
     bodyEmphasis:
       "We help you move forward with clarity, confidence, and the right agent by your side.",
     image: photos.why,
-    videoSrc: "",
+    videoSrc: "/videos/why-us.mp4",
   },
 
   identity: {

@@ -29,7 +29,7 @@ This repo follows the same architecture with a simpler stack so you can own the 
 ## Customize
 
 1. Edit `src/config/siteConfig.js` — brand, nav, listings, testimonials, blog.
-2. Swap photos in `src/config/photos.js` (Unsplash URLs today; local files in `public/` also work).
+2. Swap photos in `src/config/photos.js` (local paths under `public/images/`).
 3. For Persian/RTL, set `locale.lang` to `"fa"` and `locale.dir` to `"rtl"`. Vazirmatn is already loaded.
 
 ```bash
