@@ -60,10 +60,11 @@ export default function HeroSection() {
   const smokeY = useTransform(progress, [0, 1], ["70%", "0%"]);
   const contentY = useTransform(progress, [0, 1], ["0%", "20%"]);
   const contentScale = useTransform(progress, [0, 1], [1, 0.9]);
-  const contentOpacity = useTransform(progress, [0, 0.22, 0.42], [1, 1, 0]);
+  /* Copy exits early so house/clouds own mid-scroll (FIND content fade) */
+  const contentOpacity = useTransform(progress, [0, 0.12, 0.3], [1, 1, 0]);
   /* Soft white veil replaces English FIND mid-scroll beat */
-  const veilOpacity = useTransform(progress, [0.18, 0.42, 0.72], [0, 0.55, 0.92]);
-  const veilY = useTransform(progress, [0.18, 0.85], ["18%", "0%"]);
+  const veilOpacity = useTransform(progress, [0.12, 0.35, 0.65], [0, 0.62, 0.95]);
+  const veilY = useTransform(progress, [0.12, 0.8], ["18%", "0%"]);
 
   const { scrollYProgress: overlapProgress } = useScroll({
     target: overlapRef,
