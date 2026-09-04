@@ -680,10 +680,10 @@ export const siteConfig = {
     emptyLabel: "با این فیلتر فایلی پیدا نشد. یک شرط را کمتر کنید و دوباره جستجو کنید.",
     clearLabel: "پاک کردن فیلترها",
     priceRanges: [
-      { label: "همه قیمت‌ها", min: 0, max: Infinity },
+      { label: "همه قیمت‌ها", min: 0, max: Number.MAX_SAFE_INTEGER },
       { label: "زیر ۲۰ میلیارد", min: 0, max: 20000000000 },
       { label: "۲۰ تا ۸۰ میلیارد", min: 20000000000, max: 80000000000 },
-      { label: "بالای ۸۰ میلیارد", min: 80000000000, max: Infinity },
+      { label: "بالای ۸۰ میلیارد", min: 80000000000, max: Number.MAX_SAFE_INTEGER },
     ],
   },
 
