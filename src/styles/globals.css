@@ -1,7 +1,8 @@
 @import "tailwindcss";
+@import "lenis/dist/lenis.css";
 
 @theme {
-  --font-sans: var(--font-vazirmatn), "Vazirmatn", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter-tight), var(--font-vazirmatn), ui-sans-serif, system-ui, sans-serif;
   --color-ink: #151717;
   --color-ink-muted: #b3b3b3;
   --color-ink-soft: rgba(21, 23, 23, 0.5);

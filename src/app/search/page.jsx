@@ -1,5 +1,6 @@
-import PropertyGrid from "@/components/sections/PropertyGrid";
 import { siteConfig } from "@/config/siteConfig";
+import PageIntro from "@/components/sections/PageIntro";
+import SearchExperience from "@/components/sections/SearchExperience";
 
 export const metadata = {
   title: `${siteConfig.searchPage.heading} | ${siteConfig.brand.legalName}`,
@@ -7,13 +8,16 @@ export const metadata = {
 };
 
 export default function SearchPage() {
+  const { searchPage } = siteConfig;
+
   return (
-    <PropertyGrid
-      heading={siteConfig.searchPage.heading}
-      headingEmphasis={siteConfig.brand.name}
-      body={siteConfig.searchPage.subheading}
-      items={siteConfig.properties.items}
-      showCta={false}
-    />
+    <>
+      <PageIntro
+        heading={searchPage.heading}
+        headingEmphasis={searchPage.headingEmphasis}
+        body={searchPage.subheading}
+      />
+      <SearchExperience />
+    </>
   );
 }
