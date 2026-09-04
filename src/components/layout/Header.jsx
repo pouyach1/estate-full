@@ -51,7 +51,10 @@ export default function Header() {
             <FindWordmark className="h-[2.6rem] w-[9.1rem]" />
           </Link>
 
-          <nav className="mx-auto hidden items-center gap-[4rem] md:flex" aria-label="Primary">
+          <nav
+            className="mx-auto hidden items-center gap-[4rem] md:flex"
+            aria-label={siteConfig.header.navAriaLabel ?? "Primary"}
+          >
             {siteConfig.navigation.map((item) => (
               <div
                 key={item.label}
@@ -102,7 +105,7 @@ export default function Header() {
             type="button"
             className="ms-auto flex h-[3rem] w-[3rem] items-center justify-center md:hidden"
             aria-expanded={open}
-            aria-label="Menu"
+            aria-label={siteConfig.header.menuAriaLabel ?? "Menu"}
             onClick={() => setOpen((v) => !v)}
           >
             <span className="relative block h-[1.8rem] w-full">

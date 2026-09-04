@@ -40,18 +40,18 @@ export default function Card({ property }) {
             <span dir="ltr">{property.address}</span>
           </p>
           <div className="mt-[1.5rem]">
-            <div
-              dir="ltr"
-              className="ltr inline-flex flex-wrap text-[1.2rem] md:text-[1.6rem] font-medium leading-[1.3] text-ink"
-            >
+            <div className="inline-flex flex-wrap text-[1.2rem] md:text-[1.6rem] font-medium leading-[1.3] text-ink">
               <span>
-                {property.beds} {bedsLabel}
+                {property.beds.toLocaleString(siteConfig.locale.lang)} {bedsLabel}
               </span>
               <span className="relative ms-[2.4rem] before:absolute before:top-1/2 before:end-full before:me-[1rem] before:h-[0.4rem] before:w-[0.4rem] before:-translate-y-1/2 before:rounded-full before:bg-ink-muted">
-                {property.baths} {bathsLabel}
+                {property.baths.toLocaleString(siteConfig.locale.lang)} {bathsLabel}
               </span>
               <span className="relative ms-[2.4rem] before:absolute before:top-1/2 before:end-full before:me-[1rem] before:h-[0.4rem] before:w-[0.4rem] before:-translate-y-1/2 before:rounded-full before:bg-ink-muted">
-                {property.area} {areaLabel}
+                <span dir="ltr" className="ltr">
+                  {property.area}
+                </span>{" "}
+                {areaLabel}
               </span>
             </div>
           </div>

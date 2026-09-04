@@ -30,7 +30,7 @@ This repo follows the same architecture with a simpler stack so you can own the 
 
 1. Edit `src/config/siteConfig.js` — brand, nav, listings, testimonials, blog.
 2. Swap photos in `src/config/photos.js` (local paths under `public/images/`).
-3. For Persian/RTL, set `locale.lang` to `"fa"` and `locale.dir` to `"rtl"`. Vazirmatn is already loaded.
+3. Persian/RTL is the default (`locale.lang = "fa"`, `locale.dir = "rtl"`). Switch to `"en"` / `"ltr"` for English. Vazirmatn is the Persian face; Inter Tight remains for Latin brand glyphs.
 
 ```bash
 npm install

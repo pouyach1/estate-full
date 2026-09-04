@@ -73,8 +73,8 @@ export default function SearchExperience() {
             <FilterRow label={copy.statusLabel}>
               {[
                 { value: "all", label: copy.allNeighborhoodsLabel },
-                { value: "For Sale", label: copy.forSaleLabel },
-                { value: "For Rent", label: copy.forRentLabel },
+                { value: copy.forSaleValue ?? copy.forSaleLabel, label: copy.forSaleLabel },
+                { value: copy.forRentValue ?? copy.forRentLabel, label: copy.forRentLabel },
               ].map((item) => (
                 <button
                   key={item.value}
@@ -115,7 +115,7 @@ export default function SearchExperience() {
 
         <div className="mt-[3rem] flex flex-wrap items-center justify-between gap-[1.6rem] md:mt-[5rem]">
           <p className="text-[1.6rem] font-medium md:text-[2rem]">
-            {results.length} {copy.resultsSuffix}
+            {results.length.toLocaleString(siteConfig.locale.lang)} {copy.resultsSuffix}
           </p>
           <label className="flex items-center gap-[1rem] text-[1.6rem] font-medium md:text-[2rem]">
             <span>{copy.sortLabel}</span>
