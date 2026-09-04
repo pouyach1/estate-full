@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Reveal from "@/components/ui/Reveal";
+import ImageReveal from "@/components/ui/ImageReveal";
 import { siteConfig } from "@/config/siteConfig";
 
 export default function WhyFindSection() {
@@ -20,29 +21,31 @@ export default function WhyFindSection() {
             </p>
           </Reveal>
         </div>
-        <Reveal className="mt-[4rem] overflow-hidden md:mt-[8rem]" y={0}>
-          <div className="relative aspect-[16/9] overflow-hidden bg-mist">
-            {why.videoSrc ? (
-              <video
-                src={why.videoSrc}
-                autoPlay
-                muted
-                loop
-                playsInline
-                poster={why.image}
-                className="absolute inset-0 h-full w-full max-w-none object-cover"
-              />
-            ) : (
-              <Image
-                src={why.image}
-                alt=""
-                fill
-                className="object-cover"
-                sizes="100vw"
-              />
-            )}
-          </div>
-        </Reveal>
+        <div className="mt-[4rem] overflow-hidden md:mt-[8rem]">
+          <ImageReveal>
+            <div className="relative aspect-[16/9] overflow-hidden bg-mist">
+              {why.videoSrc ? (
+                <video
+                  src={why.videoSrc}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  poster={why.image}
+                  className="absolute inset-0 h-full w-full max-w-none object-cover"
+                />
+              ) : (
+                <Image
+                  src={why.image}
+                  alt=""
+                  fill
+                  className="object-cover"
+                  sizes="100vw"
+                />
+              )}
+            </div>
+          </ImageReveal>
+        </div>
       </div>
     </section>
   );

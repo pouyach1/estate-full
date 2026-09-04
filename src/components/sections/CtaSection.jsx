@@ -1,19 +1,21 @@
 "use client";
 
 import Image from "next/image";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { siteConfig } from "@/config/siteConfig";
 import Button from "@/components/ui/Button";
+import Reveal from "@/components/ui/Reveal";
 
 export default function CtaSection() {
   const { cta } = siteConfig;
   const ref = useRef(null);
+  const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"],
   });
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1, reduce ? 1 : 1.1]);
 
   return (
     <section
@@ -21,7 +23,7 @@ export default function CtaSection() {
       ref={ref}
       className="relative overflow-hidden py-[12rem] text-white md:py-[22rem]"
     >
-      <motion.div style={{ scale }} className="absolute inset-0">
+      <motion.div style={{ scale }} className="absolute inset-0 will-change-transform">
         <Image
           src={cta.background}
           alt=""
@@ -32,12 +34,14 @@ export default function CtaSection() {
         <div className="absolute inset-0 bg-ink/55" />
       </motion.div>
       <div className="site-container relative z-[1] text-center">
-        <h2 className="display-lg">
-          {cta.heading} <span className="em-dark">{cta.headingEmphasis}</span>
-        </h2>
-        <div className="mt-[4rem] flex justify-center">
-          <Button text={cta.ctaLabel} href={cta.ctaHref} color="primary-inverse" />
-        </div>
+        <Reveal y={20}>
+          <h2 className="display-lg">
+            {cta.heading} <span className="em-dark">{cta.headingEmphasis}</span>
+          </h2>
+          <div className="mt-[4rem] flex justify-center">
+            <Button text={cta.ctaLabel} href={cta.ctaHref} color="primary-inverse" />
+          </div>
+        </Reveal>
       </div>
     </section>
   );

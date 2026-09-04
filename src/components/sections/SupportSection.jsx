@@ -4,6 +4,7 @@ import Image from "next/image";
 import { siteConfig } from "@/config/siteConfig";
 import Button from "@/components/ui/Button";
 import Reveal from "@/components/ui/Reveal";
+import ImageReveal from "@/components/ui/ImageReveal";
 
 export default function SupportSection() {
   const { support } = siteConfig;
@@ -38,8 +39,11 @@ export default function SupportSection() {
 
         <div className="mt-[6rem] grid gap-[3rem] md:mt-[10rem] md:grid-cols-3 md:gap-[3rem]">
           {support.items.map((item, index) => (
-            <Reveal key={item.title} delay={index * 0.08} className="flex flex-col">
-              <div className="relative mb-[3rem] aspect-[1107/940] overflow-hidden">
+            <Reveal key={item.title} delay={index * 0.1} className="flex flex-col">
+              <ImageReveal
+                delay={index * 0.08}
+                className="relative mb-[3rem] aspect-[1107/940] overflow-hidden"
+              >
                 <Image
                   src={item.image}
                   alt={item.title}
@@ -47,7 +51,7 @@ export default function SupportSection() {
                   className="object-cover"
                   sizes="(max-width: 768px) 100vw, 33vw"
                 />
-              </div>
+              </ImageReveal>
               <h3 className="display-md">{item.title}</h3>
               <p className="body-md mt-[1.5rem] flex-1">{item.text}</p>
               <div className="mt-[3rem]">

@@ -4,6 +4,7 @@ import Image from "next/image";
 import { siteConfig } from "@/config/siteConfig";
 import Button from "@/components/ui/Button";
 import Reveal from "@/components/ui/Reveal";
+import ImageReveal from "@/components/ui/ImageReveal";
 
 export default function ForAgentsSection() {
   const { agents } = siteConfig;
@@ -14,7 +15,7 @@ export default function ForAgentsSection() {
         <div className="grid items-start gap-[4rem] md:grid-cols-[1fr_97.6rem] md:gap-[8rem]">
           <div className="hidden md:block">
             <p className="caption">{agents.label}</p>
-            <div className="relative mt-[69%] aspect-[364/431] max-h-[43.1rem] w-[36.4rem] overflow-hidden">
+            <ImageReveal className="relative mt-[69%] aspect-[364/431] max-h-[43.1rem] w-[36.4rem] overflow-hidden">
               <Image
                 src={agents.portraitSmall}
                 alt=""
@@ -22,7 +23,7 @@ export default function ForAgentsSection() {
                 className="object-cover"
                 sizes="364px"
               />
-            </div>
+            </ImageReveal>
           </div>
           <div className="flex flex-col gap-[4rem] md:gap-[8rem]">
             <Reveal>
@@ -30,7 +31,7 @@ export default function ForAgentsSection() {
                 {agents.heading} <span className="em">{agents.headingEmphasis}</span>
               </h2>
             </Reveal>
-            <div className="relative aspect-[365/450] overflow-hidden md:aspect-[976/688]">
+            <ImageReveal className="relative aspect-[365/450] overflow-hidden md:aspect-[976/688]">
               <Image
                 src={agents.portraitLarge}
                 alt=""
@@ -38,7 +39,7 @@ export default function ForAgentsSection() {
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 976px"
               />
-            </div>
+            </ImageReveal>
             <Reveal>
               <p className="lead-md">
                 {agents.body} <span className="em">{agents.bodyEmphasis}</span>
