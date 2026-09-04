@@ -30,7 +30,7 @@ export default function WhyFindSection() {
                 loop
                 playsInline
                 poster={why.image}
-                className="h-full w-full object-cover"
+                className="absolute inset-0 h-full w-full max-w-none object-cover"
               />
             ) : (
               <Image

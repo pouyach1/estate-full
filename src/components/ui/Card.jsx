@@ -5,6 +5,10 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { siteConfig } from "@/config/siteConfig";
 
+function fa(value) {
+  return Number(value).toLocaleString(siteConfig.locale.lang);
+}
+
 export default function Card({ property }) {
   const { bedsLabel, bathsLabel, areaLabel } = siteConfig.properties;
 
@@ -30,28 +34,25 @@ export default function Card({ property }) {
           </span>
         </div>
         <div className="flex flex-col pt-[1.5rem] md:pt-[2rem]">
-          <p className="text-[2.4rem] font-semibold leading-[1.3] tracking-[-0.02em]">
-            <span dir="ltr">{property.price}</span>
+          <p className="text-[2.2rem] font-semibold leading-[1.35] tracking-[-0.01em] md:text-[2.4rem]">
+            {property.price}
           </p>
           <h3 className="mt-[0.8rem] text-[1.8rem] md:text-[2rem] font-medium leading-[1.3]">
             {property.title}
           </h3>
           <p className="mt-[0.5rem] text-[1.2rem] md:text-[1.6rem] font-medium leading-[1.3] text-ink/70">
-            <span dir="ltr">{property.address}</span>
+            {property.address}
           </p>
           <div className="mt-[1.5rem]">
             <div className="inline-flex flex-wrap text-[1.2rem] md:text-[1.6rem] font-medium leading-[1.3] text-ink">
               <span>
-                {property.beds.toLocaleString(siteConfig.locale.lang)} {bedsLabel}
+                {fa(property.beds)} {bedsLabel}
               </span>
               <span className="relative ms-[2.4rem] before:absolute before:top-1/2 before:end-full before:me-[1rem] before:h-[0.4rem] before:w-[0.4rem] before:-translate-y-1/2 before:rounded-full before:bg-ink-muted">
-                {property.baths.toLocaleString(siteConfig.locale.lang)} {bathsLabel}
+                {fa(property.baths)} {bathsLabel}
               </span>
               <span className="relative ms-[2.4rem] before:absolute before:top-1/2 before:end-full before:me-[1rem] before:h-[0.4rem] before:w-[0.4rem] before:-translate-y-1/2 before:rounded-full before:bg-ink-muted">
-                <span dir="ltr" className="ltr">
-                  {property.area}
-                </span>{" "}
-                {areaLabel}
+                {fa(property.area)} {areaLabel}
               </span>
             </div>
           </div>

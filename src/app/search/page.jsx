@@ -3,7 +3,7 @@ import PageIntro from "@/components/sections/PageIntro";
 import SearchExperience from "@/components/sections/SearchExperience";
 
 export const metadata = {
-  title: `${siteConfig.searchPage.heading} | ${siteConfig.brand.legalName}`,
+  title: `${siteConfig.pageTitles.search} | ${siteConfig.brand.legalName}`,
   description: siteConfig.searchPage.subheading,
 };
 

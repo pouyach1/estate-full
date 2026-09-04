@@ -42,11 +42,9 @@ export default async function PropertyPage({ params }) {
         <div className="grid gap-[2rem] md:grid-cols-[1fr_auto] md:items-end">
           <div>
             <h1 className="display-lg">{property.title}</h1>
-            <p className="body-md mt-[1.5rem]" dir="ltr">
-              {property.address}
-            </p>
+            <p className="body-md mt-[1.5rem]">{property.address}</p>
           </div>
-          <p className="text-[3.2rem] font-semibold tracking-[-0.02em] md:text-[4.4rem]" dir="ltr">
+          <p className="text-[2.8rem] font-semibold leading-[1.25] tracking-[-0.01em] md:text-[4rem] md:leading-[1.2]">
             {property.price}
           </p>
         </div>
@@ -79,14 +77,23 @@ export default async function PropertyPage({ params }) {
             {property.baths.toLocaleString(siteConfig.locale.lang)} {properties.bathsLabel}
           </span>
           <span>
-            <span dir="ltr" className="ltr">
-              {property.area}
-            </span>{" "}
-            {properties.areaLabel}
+            {Number(property.area).toLocaleString(siteConfig.locale.lang)} {properties.areaLabel}
           </span>
           <span>{property.type}</span>
-          <span dir="ltr" className="ltr">
-            {property.year}
+          {property.floor ? <span>طبقه {property.floor}</span> : null}
+          {property.parking ? (
+            <span>
+              {Number(property.parking).toLocaleString(siteConfig.locale.lang, {
+                useGrouping: false,
+              })}{" "}
+              پارکینگ
+            </span>
+          ) : null}
+          <span>
+            ساخت{" "}
+            {Number(property.year).toLocaleString(siteConfig.locale.lang, {
+              useGrouping: false,
+            })}
           </span>
         </div>
 
@@ -120,6 +127,7 @@ export default async function PropertyPage({ params }) {
                   <a
                     href={`mailto:${agent.email}`}
                     className="mt-[0.6rem] block text-[1.6rem] underline"
+                    dir="ltr"
                   >
                     {agent.email}
                   </a>
