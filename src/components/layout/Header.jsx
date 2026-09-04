@@ -3,8 +3,10 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { siteConfig } from "@/config/siteConfig";
 import { ChevronIcon, FindWordmark } from "@/components/ui/Icons";
+import { EASE_LUXURY, MOTION } from "@/lib/motion";
 
 export default function Header() {
   const pathname = usePathname();
@@ -14,6 +16,7 @@ export default function Header() {
   const [openMenu, setOpenMenu] = useState(null);
   const isHome = pathname === "/";
   const solid = scrolled || open || !isHome;
+  const reduce = useReducedMotion();
 
   useEffect(() => {
     let last = window.scrollY;
@@ -75,19 +78,27 @@ export default function Header() {
                     />
                   ) : null}
                 </Link>
-                {item.children && openMenu === item.label ? (
-                  <div className="absolute start-0 top-full z-100 mt-[1rem] w-[34rem] border border-[#e0e0e0] bg-white py-[2rem] text-ink shadow-[0_20px_40px_rgba(21,23,23,0.06)]">
-                    {item.children.map((child) => (
-                      <Link
-                        key={child.label}
-                        href={child.href}
-                        className="block px-[3.2rem] py-[2rem] text-[2rem] font-medium leading-none hover:bg-[#f0f0f0]"
-                      >
-                        {child.label}
-                      </Link>
-                    ))}
-                  </div>
-                ) : null}
+                <AnimatePresence>
+                  {item.children && openMenu === item.label ? (
+                    <motion.div
+                      initial={reduce ? false : { opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={reduce ? undefined : { opacity: 0, y: 6 }}
+                      transition={MOTION.menu}
+                      className="absolute start-0 top-full z-100 mt-[1rem] w-[34rem] border border-[#e0e0e0] bg-white py-[2rem] text-ink shadow-[0_20px_40px_rgba(21,23,23,0.06)]"
+                    >
+                      {item.children.map((child) => (
+                        <Link
+                          key={child.label}
+                          href={child.href}
+                          className="block px-[3.2rem] py-[2rem] text-[2rem] font-medium leading-none transition-colors duration-300 hover:bg-[#f0f0f0]"
+                        >
+                          {child.label}
+                        </Link>
+                      ))}
+                    </motion.div>
+                  ) : null}
+                </AnimatePresence>
               </div>
             ))}
           </nav>
@@ -97,7 +108,11 @@ export default function Header() {
               href={siteConfig.header.signInHref}
               className="inline-flex items-center rounded-full bg-ink px-[2.4rem] py-[1.2rem] text-[1.6rem] font-medium text-white transition hover:bg-black"
             >
-              {siteConfig.header.signInLabel}
+              <span className="hover-shift inline-flex overflow-hidden leading-none">
+                <span data-text={siteConfig.header.signInLabel}>
+                  {siteConfig.header.signInLabel}
+                </span>
+              </span>
             </Link>
           </div>
 
@@ -110,12 +125,12 @@ export default function Header() {
           >
             <span className="relative block h-[1.8rem] w-full">
               <span
-                className={`absolute inset-x-0 top-0 h-[2px] rounded-full bg-current transition ${
+                className={`absolute inset-x-0 top-0 h-[2px] rounded-full bg-current transition duration-300 ${
                   open ? "top-[0.8rem] rotate-45" : ""
                 }`}
               />
               <span
-                className={`absolute inset-x-0 bottom-0 h-[2px] rounded-full bg-current transition ${
+                className={`absolute inset-x-0 bottom-0 h-[2px] rounded-full bg-current transition duration-300 ${
                   open ? "bottom-[0.8rem] -rotate-45" : ""
                 }`}
               />
@@ -124,31 +139,59 @@ export default function Header() {
         </div>
       </div>
 
-      <div
-        className={`fixed inset-0 z-40 flex flex-col bg-white transition-opacity duration-300 md:hidden ${
-          open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
-        }`}
-      >
-        <div className="flex flex-1 flex-col gap-[2.5rem] overflow-auto px-[4rem] pt-[10rem] pb-[3rem]">
-          {siteConfig.navigation.map((item) => (
-            <Link
-              key={item.label}
-              href={item.href}
-              onClick={() => setOpen(false)}
-              className="flex justify-between text-[2.6rem] font-medium leading-none"
-            >
-              {item.label}
-            </Link>
-          ))}
-          <Link
-            href={siteConfig.header.signInHref}
-            onClick={() => setOpen(false)}
-            className="mt-auto text-[2.6rem] font-medium leading-none"
+      <AnimatePresence>
+        {open ? (
+          <motion.div
+            key="mobile-menu"
+            initial={reduce ? false : { opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={reduce ? undefined : { opacity: 0 }}
+            transition={{ duration: 0.35, ease: EASE_LUXURY }}
+            className="fixed inset-0 z-40 flex flex-col bg-white md:hidden"
           >
-            {siteConfig.header.signInLabel}
-          </Link>
-        </div>
-      </div>
+            <div className="flex flex-1 flex-col gap-[2.5rem] overflow-auto px-[4rem] pt-[10rem] pb-[3rem]">
+              {siteConfig.navigation.map((item, index) => (
+                <motion.div
+                  key={item.label}
+                  initial={reduce ? false : { opacity: 0, y: 18 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    duration: 0.55,
+                    delay: 0.05 + index * 0.05,
+                    ease: EASE_LUXURY,
+                  }}
+                >
+                  <Link
+                    href={item.href}
+                    onClick={() => setOpen(false)}
+                    className="flex justify-between text-[2.6rem] font-medium leading-none"
+                  >
+                    {item.label}
+                  </Link>
+                </motion.div>
+              ))}
+              <motion.div
+                initial={reduce ? false : { opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.55,
+                  delay: 0.05 + siteConfig.navigation.length * 0.05,
+                  ease: EASE_LUXURY,
+                }}
+                className="mt-auto"
+              >
+                <Link
+                  href={siteConfig.header.signInHref}
+                  onClick={() => setOpen(false)}
+                  className="text-[2.6rem] font-medium leading-none"
+                >
+                  {siteConfig.header.signInLabel}
+                </Link>
+              </motion.div>
+            </div>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </header>
   );
 }

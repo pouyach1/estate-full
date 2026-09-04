@@ -2,8 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { siteConfig } from "@/config/siteConfig";
+import { MOTION } from "@/lib/motion";
 
 function fa(value) {
   return Number(value).toLocaleString(siteConfig.locale.lang);
@@ -11,13 +12,14 @@ function fa(value) {
 
 export default function Card({ property }) {
   const { bedsLabel, bathsLabel, areaLabel } = siteConfig.properties;
+  const reduce = useReducedMotion();
 
   return (
     <motion.article
-      initial={{ opacity: 0, y: 32 }}
+      initial={reduce ? false : { opacity: 0, y: 32 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.25 }}
-      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+      transition={MOTION.card}
       className="group flex flex-col"
     >
       <Link href={property.href} className="block">
@@ -27,7 +29,7 @@ export default function Card({ property }) {
             alt={property.title}
             fill
             sizes="(max-width: 768px) 100vw, 33vw"
-            className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
+            className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] motion-safe:group-hover:scale-[1.04]"
           />
           <span className="absolute top-[1.6rem] start-[1.6rem] rounded-full bg-white/90 px-[1.2rem] py-[0.6rem] text-[1.2rem] md:text-[1.4rem] font-medium text-ink">
             {property.status}

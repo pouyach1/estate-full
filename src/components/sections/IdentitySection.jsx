@@ -1,12 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { siteConfig } from "@/config/siteConfig";
 import Reveal from "@/components/ui/Reveal";
+import { EASE_LUXURY } from "@/lib/motion";
 
 export default function IdentitySection() {
   const { identity } = siteConfig;
+  const reduce = useReducedMotion();
 
   return (
     <section className="section-pad-sm md:py-[15rem]">
@@ -21,13 +23,15 @@ export default function IdentitySection() {
           {identity.chevrons.map((src, index) => (
             <motion.div
               key={src}
-              initial={{ x: "-10%", scale: 0.8, opacity: 0.1 }}
+              initial={
+                reduce ? false : { x: "-10%", scale: 0.8, opacity: 0.1 }
+              }
               whileInView={{ x: "0%", scale: 1, opacity: 1 }}
               viewport={{ once: true, amount: 0.4 }}
               transition={{
                 duration: 0.8,
-                delay: index * 0.12,
-                ease: [0.16, 1, 0.3, 1],
+                delay: reduce ? 0 : index * 0.12,
+                ease: EASE_LUXURY,
               }}
               className="-ms-[1.8rem] h-[11.8rem] w-[9.3rem] shrink-0 md:-ms-[6.7rem] md:h-[44rem] md:w-[34.6rem]"
               style={{

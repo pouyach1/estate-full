@@ -5,6 +5,8 @@ import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { siteConfig } from "@/config/siteConfig";
 import Reveal from "@/components/ui/Reveal";
+import ImageReveal from "@/components/ui/ImageReveal";
+import { MOTION } from "@/lib/motion";
 
 export default function TestimonialsSection() {
   const { testimonials } = siteConfig;
@@ -22,7 +24,7 @@ export default function TestimonialsSection() {
         </Reveal>
         <div className="md:grid md:grid-cols-[auto_65.2rem] md:gap-[9.2rem]">
           <div className="order-2 md:order-1">
-            <div className="relative aspect-[400/365] overflow-hidden md:aspect-[976/688]">
+            <ImageReveal className="relative aspect-[400/365] overflow-hidden md:aspect-[976/688]">
               <Image
                 src={testimonials.previewImage}
                 alt=""
@@ -30,7 +32,7 @@ export default function TestimonialsSection() {
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 65vw"
               />
-            </div>
+            </ImageReveal>
           </div>
           <div className="order-1 mt-[4rem] border-t border-ink md:order-2 md:mt-0">
             <div className="relative pt-[5rem] md:pt-[5rem]">
@@ -58,7 +60,7 @@ export default function TestimonialsSection() {
                     initial={{ opacity: 0, y: 16 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -12 }}
-                    transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                    transition={MOTION.swap}
                   >
                     <p className="text-[2.2rem] leading-[1.15] tracking-[-0.01em] md:text-[3.2rem] md:tracking-[-0.02em]">
                       “{active.quote}”

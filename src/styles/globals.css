@@ -158,6 +158,18 @@ p {
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+
+  .hover-shift > span,
+  .hover-shift:hover > span {
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
 .section-pad {
   padding-block: 6rem;
 }

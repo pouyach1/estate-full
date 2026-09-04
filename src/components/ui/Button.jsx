@@ -28,9 +28,12 @@ export default function Button({
     className,
   ].join(" ");
 
+  // FIND: button label uses vertical text-shift on hover (same language as nav)
   const content = (
     <>
-      <span>{text}</span>
+      <span className="hover-shift inline-flex overflow-hidden leading-none">
+        <span data-text={text}>{text}</span>
+      </span>
       {iconAfter ? (
         <ArrowIcon className="w-[1.6rem] h-[1.6rem] md:w-[2rem] md:h-[2rem] rtl:rotate-180 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-[0.2rem] rtl:group-hover:-translate-x-[0.2rem]" />
       ) : null}

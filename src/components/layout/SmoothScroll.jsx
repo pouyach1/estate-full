@@ -2,12 +2,19 @@
 
 import { useEffect } from "react";
 import Lenis from "lenis";
+import { useReducedMotion } from "framer-motion";
 
 export default function SmoothScroll() {
+  const reduce = useReducedMotion();
+
   useEffect(() => {
+    if (reduce) return undefined;
+
     const lenis = new Lenis({
-      duration: 1.1,
+      // FIND uses a calm, cinematic wheel feel
+      duration: 1.2,
       smoothWheel: true,
+      touchMultiplier: 1.5,
     });
 
     let frame = 0;
@@ -21,7 +28,7 @@ export default function SmoothScroll() {
       cancelAnimationFrame(frame);
       lenis.destroy();
     };
-  }, []);
+  }, [reduce]);
 
   return null;
 }
