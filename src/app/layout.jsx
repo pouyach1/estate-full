@@ -39,6 +39,12 @@ export default function RootLayout({ children }) {
       <body
         className={`${isRtl ? vazirmatn.className : interTight.className} site-shell antialiased`}
       >
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "if('scrollRestoration' in history){history.scrollRestoration='manual';}",
+          }}
+        />
         <SmoothScroll />
         <Header />
         <main className="flex-1">{children}</main>

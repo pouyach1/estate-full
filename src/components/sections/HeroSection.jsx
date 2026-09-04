@@ -79,6 +79,21 @@ export default function HeroSection() {
     }
   });
 
+  /* Seed fades once refs exist (refresh / first paint may skip a "change" at 0). */
+  useEffect(() => {
+    if (reduce) return undefined;
+    const v = progress.get();
+    if (contentFadeRef.current) {
+      const o = v <= 0 ? 1 : v >= 0.3 ? 0 : 1 - v / 0.3;
+      contentFadeRef.current.style.opacity = String(o);
+    }
+    if (veilFadeRef.current) {
+      const o = v <= 0.1 ? 0 : v >= 0.55 ? 1 : (v - 0.1) / 0.45;
+      veilFadeRef.current.style.opacity = String(o);
+    }
+    return undefined;
+  }, [progress, reduce]);
+
   const { scrollYProgress: overlapProgress } = useScroll({
     target: overlapRef,
     offset: ["start end", "end start"],
@@ -87,9 +102,18 @@ export default function HeroSection() {
   const overlapFadeRef = useRef(null);
   useMotionValueEvent(overlapProgress, "change", (v) => {
     if (reduce || !overlapFadeRef.current) return;
-    const o = v <= 0.15 ? 1 : v >= 0.85 ? 0.15 : 1 - ((v - 0.15) / 0.7) * 0.85;
+    const o =
+      v <= 0.15 ? 1 : v >= 0.85 ? 0.15 : 1 - ((v - 0.15) / 0.7) * 0.85;
     overlapFadeRef.current.style.opacity = String(o);
   });
+  useEffect(() => {
+    if (reduce || !overlapFadeRef.current) return undefined;
+    const v = overlapProgress.get();
+    const o =
+      v <= 0.15 ? 1 : v >= 0.85 ? 0.15 : 1 - ((v - 0.15) / 0.7) * 0.85;
+    overlapFadeRef.current.style.opacity = String(o);
+    return undefined;
+  }, [overlapProgress, reduce]);
 
   useEffect(() => {
     const id = window.setTimeout(() => setReady(true), reduce ? 0 : 200);
@@ -248,7 +272,7 @@ export default function HeroSection() {
                 style={{ opacity: 1 }}
               >
                 <motion.h1
-                  className="display-xl text-white"
+                  className="display-xl text-white [text-shadow:0_1px_2px_rgba(21,23,23,0.4),0_8px_32px_rgba(21,23,23,0.28)]"
                   initial={reduce ? false : { opacity: 0, y: 24 }}
                   animate={ready ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
                   transition={MOTION.heroTitle}
@@ -257,13 +281,13 @@ export default function HeroSection() {
                 </motion.h1>
 
                 <motion.p
-                  className="lead-lg mx-auto mt-[1.5rem] max-w-[90rem] text-balance text-white/90 md:mx-0 md:mt-[2rem]"
+                  className="lead-lg mx-auto mt-[1.5rem] max-w-[90rem] text-balance text-white md:mx-0 md:mt-[2rem] [text-shadow:0_1px_2px_rgba(21,23,23,0.35),0_6px_24px_rgba(21,23,23,0.22)]"
                   initial={reduce ? false : { opacity: 0, y: 18 }}
                   animate={ready ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }}
                   transition={MOTION.heroLead}
                 >
                   {hero.lead}{" "}
-                  <span className="text-white/65">{hero.leadEmphasis}</span>
+                  <span className="text-white/85">{hero.leadEmphasis}</span>
                 </motion.p>
 
                 <motion.div
