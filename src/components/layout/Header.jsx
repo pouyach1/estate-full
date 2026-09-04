@@ -147,7 +147,7 @@ export default function Header() {
             animate={{ opacity: 1 }}
             exit={reduce ? undefined : { opacity: 0 }}
             transition={{ duration: 0.35, ease: EASE_LUXURY }}
-            className="fixed inset-0 z-40 flex flex-col bg-white md:hidden"
+            className="fixed inset-0 z-[60] flex flex-col bg-white text-ink md:hidden"
           >
             <div className="flex flex-1 flex-col gap-[2.5rem] overflow-auto px-[4rem] pt-[10rem] pb-[3rem]">
               {siteConfig.navigation.map((item, index) => (
