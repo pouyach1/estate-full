@@ -73,16 +73,21 @@ export default async function PropertyPage({ params }) {
 
         <div className="mt-[4rem] flex flex-wrap gap-[3rem] text-[1.6rem] font-medium md:mt-[6rem] md:text-[2rem]">
           <span>
-            {property.beds} {properties.bedsLabel}
+            {property.beds.toLocaleString(siteConfig.locale.lang)} {properties.bedsLabel}
           </span>
           <span>
-            {property.baths} {properties.bathsLabel}
+            {property.baths.toLocaleString(siteConfig.locale.lang)} {properties.bathsLabel}
           </span>
-          <span dir="ltr">
-            {property.area} {properties.areaLabel}
+          <span>
+            <span dir="ltr" className="ltr">
+              {property.area}
+            </span>{" "}
+            {properties.areaLabel}
           </span>
           <span>{property.type}</span>
-          <span>{property.year}</span>
+          <span dir="ltr" className="ltr">
+            {property.year}
+          </span>
         </div>
 
         <div className="mt-[6rem] grid gap-[6rem] md:grid-cols-[1fr_48rem] md:gap-[10rem]">

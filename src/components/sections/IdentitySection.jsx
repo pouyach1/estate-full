@@ -12,8 +12,9 @@ export default function IdentitySection() {
     <section className="section-pad-sm md:py-[15rem]">
       <div className="site-container">
         <Reveal>
-          <h2 className="display-lg mx-auto mb-[4rem] flex justify-center text-center md:mb-[8rem]">
-            {identity.heading} <span className="em">&nbsp;{identity.headingEmphasis}</span>
+          <h2 className="display-lg mx-auto mb-[4rem] text-center md:mb-[8rem]">
+            {identity.heading}{" "}
+            <span className="em">{identity.headingEmphasis}</span>
           </h2>
         </Reveal>
         <div className="relative ms-[1.8rem] flex justify-center md:ms-[6.7rem]">
