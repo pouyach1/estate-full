@@ -28,9 +28,9 @@ This repo follows the same architecture with a simpler stack so you can own the 
 
 ## Customize
 
-1. Edit `src/config/siteConfig.js` — brand, nav, listings, testimonials, blog.
+1. Edit `src/config/siteConfig.js` — brand, nav, Iranian listings, consultants, blog.
 2. Swap photos in `src/config/photos.js` (local paths under `public/images/`).
-3. Persian/RTL is the default (`locale.lang = "fa"`, `locale.dir = "rtl"`). Switch to `"en"` / `"ltr"` for English. Vazirmatn is the Persian face; Inter Tight remains for Latin brand glyphs.
+3. Default locale is Persian RTL (`fa` / `rtl`) with Iranian product copy and تومان pricing. Brand mark FIND stays Latin.
 
 ```bash
 npm install

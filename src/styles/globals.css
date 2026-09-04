@@ -97,7 +97,7 @@ p {
   unicode-bidi: plaintext;
 }
 
-/* Persian UI: keep block direction from dir=rtl instead of first-strong LTR ($ / Latin titles). */
+/* Persian UI: keep block direction from dir=rtl instead of first-strong LTR Latin titles. */
 [dir="rtl"] h1,
 [dir="rtl"] h2,
 [dir="rtl"] h3,

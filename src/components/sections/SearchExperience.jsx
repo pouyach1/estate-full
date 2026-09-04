@@ -99,14 +99,16 @@ export default function SearchExperience() {
               ))}
             </FilterRow>
             <FilterRow label={copy.bedsBathsLabel}>
-              {[0, 3, 4, 5].map((value) => (
+              {[0, 1, 2, 3, 4].map((value) => (
                 <button
                   key={value}
                   type="button"
                   className={`${chip} ${minBeds === value ? active : idle}`}
                   onClick={() => setMinBeds(value)}
                 >
-                  {value === 0 ? copy.anyBedsLabel : `${value}+`}
+                  {value === 0
+                    ? copy.anyBedsLabel
+                    : `${value.toLocaleString(siteConfig.locale.lang)}+`}
                 </button>
               ))}
             </FilterRow>
