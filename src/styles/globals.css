@@ -117,6 +117,7 @@ p {
   display: flex;
   min-height: 100%;
   flex-direction: column;
+  overflow-x: clip;
 }
 
 .site-container {
